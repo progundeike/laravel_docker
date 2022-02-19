@@ -10,7 +10,7 @@ services:
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_DATABASE=${DB_NAME}
+      - DB_DBNAME=${DB_NAME}
       - DB_USERNAME=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
 
@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: ./docker/mysql/Dockerfile
     ports:
-      - ${DB_PORT}:3306
+      - 3306:3306
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
@@ -39,16 +39,6 @@ services:
       TZ: 'Asia/Tokyo'
     volumes:
       - mysql-volume:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    depends_on:
-      - db
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=db
-    ports:
-      - 4040:80
 
 volumes:
   mysql-volume:
